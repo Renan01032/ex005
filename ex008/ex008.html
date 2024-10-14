@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculo do Imposto de Renda</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    table {
+      border-collapse: collapse;
+      width: 50%;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Calculo do Imposto de Renda</h2>
+
+  <form id="formSalario">
+    <label for="nome">Nome:</label><br>
+    <input type="text" id="nome" name="nome"><br><br>
+    <label for="salario">Salário:</label><br>
+    <input type="number" id="salario" name="salario"><br><br>
+    <button type="button" onclick="calcularIR()">Calcular IR</button><br><br>
+    <label for="imposto">Imposto de Renda:</label><br>
+    <input type="text" id="imposto" name="imposto" readonly>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Faixa salarial</th>
+        <th>Alíquota</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Até R$ 1.434</td>
+        <td>0% (isento)</td>
+      </tr>
+      <tr>
+        <td>De R$ 1.434 a R$ 2.150</td>
+        <td>7,5%</td>
+      </tr>
+      <tr>
+        <td>De R$ 2.150 a R$ 2.866</td>
+        <td>15%</td>
+      </tr>
+      <tr>
+        <td>De R$ 2.866 a R$ 3.582</td>
+        <td>22,5%</td>
+      </tr>
+      <tr>
+        <td>Acima de R$ 3.582</td>
+        <td>27,5%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    function calcularIR() {
+      var salario = parseFloat(document.getElementById("salario").value);
+      var imposto = 0;
+
+      if (salario <= 1434) {
+        imposto = 0;
+      } else if (salario <= 2150) {
+        imposto = salario * 0.075;
+      } else if (salario <= 2866) {
+        imposto = salario * 0.15;
+      } else if (salario <= 3582) {
+        imposto = salario * 0.225;
+      } else {
+        imposto = salario * 0.275;
+      }
+
+      document.getElementById("imposto").value = "R$ " + imposto.toFixed(2);
+    }
+  </script>
+
+</body>
+</html>

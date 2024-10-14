@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: blue;
+            font-size: 24pt;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Calculadora de IMC</h1>
+
+    <form id="form-imc">
+        <label for="altura">Altura (em metros):</label><br>
+        <input type="number" id="altura" name="altura" step="0.01" required><br><br>
+
+        <label for="peso">Peso (em kg):</label><br>
+        <input type="number" id="peso" name="peso" step="0.01" required><br><br>
+
+        <label for="sexo">Sexo:</label><br>
+        <input type="radio" id="masculino" name="sexo" value="masculino" required>
+        <label for="masculino">Masculino</label><br>
+        <input type="radio" id="feminino" name="sexo" value="feminino" required>
+        <label for="feminino">Feminino</label><br><br>
+
+        <button type="submit">Calcular IMC</button>
+    </form>
+
+    <div id="resultado"></div>
+
+    <script>
+        const form = document.getElementById('form-imc');
+        const resultadoDiv = document.getElementById('resultado');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const altura = parseFloat(document.getElementById('altura').value);
+            const peso = parseFloat(document.getElementById('peso').value);
+            const sexo = document.querySelector('input[name="sexo"]:checked').value;
+
+            const imc = calcularIMC(peso, altura);
+            const categoria = obterCategoriaIMC(imc, sexo);
+
+            resultadoDiv.innerHTML = `
+                <p>Seu IMC é: ${imc.toFixed(2)}</p>
+                <p>Sua categoria é: ${categoria}</p>
+            `;
+        });
+
+        function calcularIMC(peso, altura) {
+            return peso / (altura * altura);
+        }
+
+        function obterCategoriaIMC(imc, sexo) {
+            if (sexo === 'masculino') {
+                if (imc < 20.7) return 'Abaixo do peso';
+                if (imc >= 20.7 && imc < 26.4) return 'No peso normal';
+                if (imc >= 26.4 && imc < 27.8) return 'Marginalmente acima do peso';
+                if (imc >= 27.8 && imc < 31.1) return 'Acima do peso ideal';
+                return 'Obeso';
+            } else {
+                if (imc < 19.1) return 'Abaixo do peso';
+                if (imc >= 19.1 && imc < 25.8) return 'No peso normal';
+                if (imc >= 25.8 && imc < 27.3) return 'Marginalmente acima do peso';
+                if (imc >= 27.3 && imc < 32.3) return 'Acima do peso ideal';
+                return 'Obeso';
+            }
+        }
+    </script>
+
+</body>
+</html>

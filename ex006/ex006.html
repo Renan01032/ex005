@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Preço</title>
+</head>
+<body>
+  <h1>Calculadora de Preço</h1>
+  <form id="formPreco">
+    <label for="preco">Preço do Produto:</label><br>
+    <input type="number" id="preco" name="preco" required><br><br>
+
+    <label for="pagamento">Condição de Pagamento:</label><br>
+    <select id="pagamento" name="pagamento">
+      <option value="1">À vista 10% de desconto</option>
+      <option value="2">Cartão 5% de desconto</option>
+      <option value="3">Parcelado 10% de aumento</option>
+    </select><br><br>
+
+    <button type="button" onclick="calcularPreco()">Calcular</button>
+  </form>
+
+  <h2>Resultados:</h2>
+  <p>Valor Real do Produto: R$ <span id="valorReal"></span></p>
+  <p>Valor a ser Pago: R$ <span id="valorFinal"></span></p>
+
+  <script>
+    function calcularPreco() {
+      const precoProduto = parseFloat(document.getElementById("preco").value);
+      const condicaoPagamento = parseInt(document.getElementById("pagamento").value);
+
+      let valorFinal = precoProduto;
+      let mensagem = "";
+
+      switch (condicaoPagamento) {
+        case 1:
+          valorFinal *= 0.9; 
+          mensagem = "Você recebeu 10% de desconto!";
+          break;
+        case 2:
+          valorFinal *= 0.95; 
+          mensagem = "Você recebeu 5% de desconto!";
+          break;
+        case 3:
+          valorFinal *= 1.1; 
+          mensagem = "Compra parcelada tem 10% de acréscimo.";
+          break;
+        default:
+          mensagem = "Condição de pagamento inválida.";
+      }
+
+      document.getElementById("valorReal").textContent = precoProduto.toFixed(2);
+      document.getElementById("valorFinal").textContent = valorFinal.toFixed(2);
+      alert(mensagem);
+    }
+  </script>
+</body>
+</html>
